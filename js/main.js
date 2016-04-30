@@ -1,4 +1,7 @@
-let d = new Date();
+function tick(){
+  let d = new Date();
+  let t = setTimeout(tick,60000);
+
 let date = d.getDate();
 let hours = d.getHours();
 let minutes = d.getMinutes();
@@ -8,7 +11,7 @@ document.getElementById("timeSpan").innerHTML = hours + ":" + minutes;
 
 let calculateSleepTime = function(hours, minutes, cycle) {
     let calculatedsleepminute = minutes + 15;
-    if (calculatedsleepminute>60){
+    if (calculatedsleepminute>=60){
       hours++
       calculatedsleepminute = calculatedsleepminute - 60
     }
@@ -43,3 +46,6 @@ document.getElementById('calcBtn').addEventListener('click', function () {
   printCalculatedSleepTime();
 
 });
+}
+
+tick();

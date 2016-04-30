@@ -1,48 +1,54 @@
 "use strict";
 
-var d = new Date();
-var date = d.getDate();
-var hours = d.getHours();
-var minutes = d.getMinutes();
-var cycle = 4;
+function tick() {
+  var d = new Date();
+  var t = setTimeout(tick, 60000);
 
-document.getElementById("timeSpan").innerHTML = hours + ":" + minutes;
+  var date = d.getDate();
+  var hours = d.getHours();
+  var minutes = d.getMinutes();
+  var cycle = 4;
 
-var calculateSleepTime = function calculateSleepTime(hours, minutes, cycle) {
-  var calculatedsleepminute = minutes + 15;
-  if (calculatedsleepminute > 60) {
-    hours++;
-    calculatedsleepminute = calculatedsleepminute - 60;
-  }
+  document.getElementById("timeSpan").innerHTML = hours + ":" + minutes;
 
-  var calculatedsleephour = hours + 1.5 * cycle;
-  if (calculatedsleephour > 24) {
-    calculatedsleephour = calculatedsleephour - 24;
-  }
+  var calculateSleepTime = function calculateSleepTime(hours, minutes, cycle) {
+    var calculatedsleepminute = minutes + 15;
+    if (calculatedsleepminute >= 60) {
+      hours++;
+      calculatedsleepminute = calculatedsleepminute - 60;
+    }
 
-  return { calculatedsleephour: calculatedsleephour, calculatedsleepminute: calculatedsleepminute };
-};
+    var calculatedsleephour = hours + 1.5 * cycle;
+    if (calculatedsleephour > 24) {
+      calculatedsleephour = calculatedsleephour - 24;
+    }
 
-var printCalculatedSleepTime = function printCalculatedSleepTime() {
-  var _calculateSleepTime = calculateSleepTime(hours, minutes, cycle);
+    return { calculatedsleephour: calculatedsleephour, calculatedsleepminute: calculatedsleepminute };
+  };
 
-  var calculatedsleephour = _calculateSleepTime.calculatedsleephour;
-  var calculatedsleepminute = _calculateSleepTime.calculatedsleepminute;
+  var printCalculatedSleepTime = function printCalculatedSleepTime() {
+    var _calculateSleepTime = calculateSleepTime(hours, minutes, cycle);
 
-  if (calculatedsleephour < 10) {
-    document.getElementById("hours").innerHTML = 0 + "" + calculatedsleephour + ":";
-  } else {
-    document.getElementById("hours").innerHTML = calculatedsleephour + ":";
-  }
+    var calculatedsleephour = _calculateSleepTime.calculatedsleephour;
+    var calculatedsleepminute = _calculateSleepTime.calculatedsleepminute;
 
-  if (calculatedsleepminute < 10) {
-    document.getElementById("minutes").innerHTML = 0 + "" + calculatedsleepminute;
-  } else {
-    document.getElementById("minutes").innerHTML = calculatedsleepminute;
-  }
-};
+    if (calculatedsleephour < 10) {
+      document.getElementById("hours").innerHTML = 0 + "" + calculatedsleephour + ":";
+    } else {
+      document.getElementById("hours").innerHTML = calculatedsleephour + ":";
+    }
 
-document.getElementById('calcBtn').addEventListener('click', function () {
+    if (calculatedsleepminute < 10) {
+      document.getElementById("minutes").innerHTML = 0 + "" + calculatedsleepminute;
+    } else {
+      document.getElementById("minutes").innerHTML = calculatedsleepminute;
+    }
+  };
 
-  printCalculatedSleepTime();
-});
+  document.getElementById('calcBtn').addEventListener('click', function () {
+
+    printCalculatedSleepTime();
+  });
+}
+
+tick();
